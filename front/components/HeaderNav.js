@@ -33,7 +33,7 @@ const Center = styled.span`
 const HeaderNav = () => {
     return (
         <Header>
-            <Wrapper icon={faHandPointUp} /><Center>반응속도 테스트 <Style> Made by taewoong kang</Style></Center>
+            <Wrapper icon={faHandPointUp} /><Center>반응속도 테스트 <Style> By Taewoong </Style></Center>
         </Header>
     );
 }
