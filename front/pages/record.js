@@ -3,7 +3,7 @@
 import React from 'react';
 import AppLayout from '../components/AppLayout';
 
-const Proflie = () => {
+const Record = () => {
     return (
         <AppLayout>
             <div>내 프로필</div>
@@ -11,4 +11,4 @@ const Proflie = () => {
     );
 };
 
-export default Proflie;
+export default Record;

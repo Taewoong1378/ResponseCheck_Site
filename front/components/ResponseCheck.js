@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 const Wrapper = styled.div`
   border: 1px solid black;
@@ -46,9 +47,6 @@ const ButtonWrapper = styled.button`
   padding: 10px 20px;
   text-align: center;
   text-decoration: none;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 20px;
   margin: 4px 2px;
   margin-top: 120px;
@@ -56,6 +54,10 @@ const ButtonWrapper = styled.button`
   cursor: pointer;
 `;
 
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const ResponseCheck = () => {
   const [state, setState] = useState('waiting');
@@ -67,13 +69,13 @@ const ResponseCheck = () => {
   const startTime = useRef();
   const endTime = useRef();
 
-  const onClickScreen = (e) => {
+  const onClickScreen = useCallback((e) => {
     if (state === 'waiting') {
       timeout.current = setTimeout(() => {
         setState('now');
         setMessage('지금 클릭!');
         startTime.current = new Date();
-      }, Math.floor(Math.random() * 1000) + 2000); // 2초~3초 랜덤
+      }, Math.floor(Math.random() * 1000) + 2000);  // process.NODE.ENV === 'production' ? Math.floor(Math.random() * 1000) + 2000 : 0.1
       setState('ready');
       setMessage('초록색이 되면 클릭하세요!');
     } else if (state === 'ready') { // 성급하게 클릭
@@ -99,15 +101,15 @@ const ResponseCheck = () => {
         e.preventDefault();
       }
     }
-  };
-  const onReset = () => {
+  }, [state]);
+  const onReset = useCallback(() => {
     setResult([]);
     setState('waiting');
     // eslint-disable-next-line react/jsx-key
     setMessage(['기회는 5번! 다음 화면에서 배경이 초록색이 되는 순간 클릭하세요.', <br/>, <br/>, '시작하려면 클릭해주세요.']);
-  };
+  }, []);
   
-  const renderAverage = () => {
+  const renderAverage = useCallback(() => {
     return result.length === 0
       ? null
       : result.length === 5
@@ -129,7 +131,12 @@ const ResponseCheck = () => {
             '정말 빠른 반응 속도를 가지고 있네요!'}
           </Li>
         </Ul>
-        <ButtonWrapper onClick={onReset}>다시!</ButtonWrapper>
+        <Div>
+          <ButtonWrapper onClick={onReset}>다시!</ButtonWrapper>
+          <Link href="/record">
+            <a><ButtonWrapper>다른 사람 점수 보러가기</ButtonWrapper></a>
+          </Link>
+        </Div>
       </>
       :
        <>
@@ -142,7 +149,7 @@ const ResponseCheck = () => {
         </Ul>
         
       </>
-  };
+  }, [result]);
 
   return (
     <>

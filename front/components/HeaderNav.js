@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { faHandPointUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from 'next/link';
 
 const Header = styled.div`
     width: 100%;
@@ -30,10 +31,20 @@ const Center = styled.span`
     font-size: 20px;
 `;
 
+const A = styled.a`
+    color: gold;
+`;
+
 const HeaderNav = () => {
     return (
         <Header>
-            <Wrapper icon={faHandPointUp} /><Center>반응속도 테스트 <Style> By Taewoong </Style></Center>
+            <Wrapper icon={faHandPointUp} />
+            <Center>
+                <Link href="/"><A>반응속도 테스트</A></Link>
+                <Style> 
+                    By Taewoong 
+                </Style>
+            </Center>
         </Header>
     );
 }
