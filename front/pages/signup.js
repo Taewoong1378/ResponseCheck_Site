@@ -1,13 +1,14 @@
+// pages/profile.js
+
 import React from 'react';
-import ResponseCheck from '../components/ResponseCheck';
 import AppLayout from '../components/AppLayout';
 
-const Proflie = () => {
+const Signup = () => {
     return (
         <AppLayout>
-            <ResponseCheck />
+            <div>내 프로필</div>
         </AppLayout>
     );
 };
 
-export default Proflie;
+export default Signup;
