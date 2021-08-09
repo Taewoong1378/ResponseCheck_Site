@@ -1,63 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import styled from 'styled-components';
 import Link from 'next/link';
-
-const Wrapper = styled.div`
-  border: 1px solid black;
-  width: 70%;
-  height: 400px;
-  text-align: center;
-  margin: auto;
-  padding: 25px;
-  overflow: hidden;
-  text-overflow: clip;
-  white-space: normal;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 19px;
-  font-weight: bold;
-  user-select: none;
-  color: ${props=> props.state==='ready' ? 'white' : 'black'};
-  background-color: ${props=> props.state === 'waiting' ? 'aqua' : props.state ==='ready' ? 'red' : props.state ==='finish' ? 'gray' : 'greenyellow'};
-`;
-
-const Ul = styled.ul`
-  margin-top: 30px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  font-weight: bold;
-  line-height: 2.0em;
-  font-size: 15px;
-  list-style: none;
-  padding: 0;
-`;
-
-const Li = styled.li`
-  text-align: center;
-  font-size: 20px;
-  line-height: 2.0em;
-`;
-
-const ButtonWrapper = styled.button`
-  background-color: gray;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 20px;
-  margin: 4px 2px;
-  margin-top: 120px;
-  margin-bottom: 10px;
-  cursor: pointer;
-`;
-
-const Div = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import { Wrapper, Ul, Li, ButtonWrapper, Div } from './styles';
 
 const ResponseCheck = () => {
   const [state, setState] = useState('waiting');
@@ -75,7 +18,7 @@ const ResponseCheck = () => {
         setState('now');
         setMessage('지금 클릭!');
         startTime.current = new Date();
-      }, Math.floor(Math.random() * 1000) + 2000);  // process.NODE.ENV === 'production' ? Math.floor(Math.random() * 1000) + 2000 : 0.1
+      }, 0.1);  // process.NODE.ENV === 'production' ? Math.floor(Math.random() * 1000) + 2000 : 0.1
       setState('ready');
       setMessage('초록색이 되면 클릭하세요!');
     } else if (state === 'ready') { // 성급하게 클릭
@@ -122,7 +65,7 @@ const ResponseCheck = () => {
           <Li>
             {Math.round(result.reduce((a, c) => a + c) / result.length) > 250 
             ?
-            '연습 좀 더 하셔야겠네요!' 
+            '연습을 더 하셔야겠네요!' 
             : 
             Math.round(result.reduce((a, c) => a + c) / result.length) > 220 
             ? 
@@ -132,22 +75,21 @@ const ResponseCheck = () => {
           </Li>
         </Ul>
         <Div>
-          <ButtonWrapper onClick={onReset}>다시!</ButtonWrapper>
+          <ButtonWrapper type="primary" onClick={onReset}>다시!</ButtonWrapper>
           <Link href="/record">
-            <a><ButtonWrapper>다른 사람 점수 보러가기</ButtonWrapper></a>
+            <a><ButtonWrapper type="primary">다른 사람 점수 보러가기</ButtonWrapper></a>
           </Link>
         </Div>
       </>
       :
        <>
         <Ul>
-          <li>1회차 : {result[0] ? `${result[0]}ms` : null}</li>
-          <li>2회차 : {result[1] ? `${result[1]}ms` : null}</li>
-          <li>3회차 : {result[2] ? `${result[2]}ms` : null}</li>
-          <li>4회차 : {result[3] ? `${result[3]}ms` : null}</li>
-          <li>5회차 : {result[4] ? `${result[4]}ms` : null}</li>
+          <Li>1회차 : {result[0] ? `${result[0]}ms` : null}</Li>
+          <Li>2회차 : {result[1] ? `${result[1]}ms` : null}</Li>
+          <Li>3회차 : {result[2] ? `${result[2]}ms` : null}</Li>
+          <Li>4회차 : {result[3] ? `${result[3]}ms` : null}</Li>
+          <Li>5회차 : {result[4] ? `${result[4]}ms` : null}</Li>
         </Ul>
-        
       </>
   }, [result]);
 

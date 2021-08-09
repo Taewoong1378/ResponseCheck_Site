@@ -1,25 +1,11 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const path = require('path');
-const session = require('express-session');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const hpp = require('hpp');
-const redis = require('redis');
-const RedisStore = require('connect-redis')(session);
 
 dotenv.config();
-const redisClient = redis.createClient({
-  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-  password: process.env.REDIS_PASSWORD,
-});
-const pageRouter = require('./routes/page');
-const authRouter = require('./routes/auth');
-const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
-const likeRouter = require('./routes/like');
-const { sequelize } = require('./models');
 const logger = require('./logger');
 
 const app = express();
@@ -43,33 +29,10 @@ if(process.env.NODE_ENV === 'production') {
 } else {
   app.use(morgan('dev'));
 }
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
-const sessionOption = {
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  },
-  store: new RedisStore({ client: redisClient }),
-};
-if(process.env.NODE_ENV === 'production') {
-  sessionOption.proxy = true;
-}
 
-app.use(session(sessionOption));
-// express-session보다 아래에 위치해야됨. session을 받아서 실행해야하기 때문에.
-
-app.use('/', pageRouter);
-app.use('/auth', authRouter);
-app.use('/post', postRouter);
 app.use('/user', userRouter);
-app.use('/like', likeRouter);
 
 // 404처리 미들웨어
 app.use((req, res, next) => {
