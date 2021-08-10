@@ -1,11 +1,11 @@
 import produce from '../util/produce';
 
 export const initialState = {
-    nickname: [],
+    nickname: null,
     nicknameLoading: false,
     nicknameDone: false,
     nicknameError: null,
-    score: [],
+    score: null,
 };
 
 export const NICKNAME_REQUEST = 'NICKNAME_REQUEST';
