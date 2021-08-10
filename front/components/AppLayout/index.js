@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { faGithub, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import HeaderNav from '../HeaderNav';
+import { Provider } from 'react-redux';
 import { Footer, Github, Instagram, Facebook, Ul, Li } from './styles';
 
 const AppLayout = ({ children }) => (
         <div>
             <div>
-                <HeaderNav />
+                <Provider>
+                    <HeaderNav />
+                </Provider>
                 {children}
                 <Footer>
                     <Ul>

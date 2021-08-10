@@ -1,32 +1,24 @@
 const express = require('express');
-
-const User = require('../models/user');
-const { addFollowing } = require('../controllers/user');
+const { User } = require('../models');
 
 const router = express.Router();
 
-router.post('/:id/notfollow', async (req, res, next) => {
-  try {
-    const user = await User.findOne({ where: { id: req.params.id } });
-    if (user) {
-      await user.removeFollower(parseInt(req.user.id));
-      res.send('success');
+router.post('/', async (req, res, next) => {    // POST /user
+    try {
+        await User.create({
+            nickname: req.body.nickname,
+            score: req.body.score,
+        });
+        const result = await User.findAll({
+          attributes: ['nickname', 'score'],
+          order: ['score', 'DESC'],
+          limit: 10,
+        });
+        res.status(201).json(result);
+    } catch(error) {
+        console.error(error);
+        next(error);
     }
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/profile', async(req, res, next)=>{
-  try {
-  await User.update({ nick: req.body.nick }, {
-    where: { id: req.user.id },
-  });
-  res.redirect('/profile');
-  } catch(error) {
-    console.error(error);
-    next(error);
-  } 
 });
 
 module.exports = router;

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import Helmet from 'react-helmet';
+import wrapper from '../store/configureStore';
 
-const Check = ({ Component }) => {
+const App = ({ Component }) => {
     return (
         <>
             <Helmet>
@@ -21,8 +22,8 @@ const Check = ({ Component }) => {
     );
 };
 
-Check.propTypes = {
+App.propTypes = {
     Component: PropTypes.elementType.isRequired,
 }
 
-export default Check;
+export default wrapper.withRedux(App);

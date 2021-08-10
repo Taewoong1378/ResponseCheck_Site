@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const hpp = require('hpp');
+const { sequelize } = require('./models');
 
 dotenv.config();
 const userRouter = require('./routes/user');
@@ -11,7 +12,7 @@ const logger = require('./logger');
 const app = express();
 // 개발할 때 포트와 배포할 때 포트를 다르게 한다
 // 나중에는 .env에 PORT=80을 넣어줄 것.
-app.set('port', process.env.PORT || 8001);
+app.set('port', process.env.PORT || 3060);
 
 // 시퀄라이즈 설정
 sequelize.sync({ force: false })
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/user', userRouter);
+
 
 // 404처리 미들웨어
 app.use((req, res, next) => {

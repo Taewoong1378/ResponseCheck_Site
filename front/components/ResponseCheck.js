@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
+import { Wrapper, Ul, Li, Div, ButtonWrapper } from './styles';
+import UnderButton from './UnderButton';
 import Link from 'next/link';
-import { Wrapper, Ul, Li, ButtonWrapper, Div } from './styles';
 
 const ResponseCheck = () => {
   const [state, setState] = useState('waiting');
@@ -45,13 +46,16 @@ const ResponseCheck = () => {
       }
     }
   }, [state]);
+
   const onReset = useCallback(() => {
     setResult([]);
     setState('waiting');
     // eslint-disable-next-line react/jsx-key
     setMessage(['기회는 5번! 다음 화면에서 배경이 초록색이 되는 순간 클릭하세요.', <br/>, <br/>, '시작하려면 클릭해주세요.']);
   }, []);
-  
+
+  const score = result.length !==0 ? Math.round(result.reduce((a, c) => a + c) / result.length) : null;
+
   const renderAverage = useCallback(() => {
     return result.length === 0
       ? null
@@ -60,14 +64,14 @@ const ResponseCheck = () => {
       <>
         <Ul>
           <Li>
-            평균 : {Math.round(result.reduce((a, c) => a + c) / result.length)}ms
+            평균 : {score}ms
           </Li>
           <Li>
-            {Math.round(result.reduce((a, c) => a + c) / result.length) > 250 
+            {score > 250 
             ?
             '연습을 더 하셔야겠네요!' 
             : 
-            Math.round(result.reduce((a, c) => a + c) / result.length) > 220 
+            score > 220 
             ? 
             '이 정도면 전체 평균 정도 수준이네요!' 
             : 
@@ -76,10 +80,11 @@ const ResponseCheck = () => {
         </Ul>
         <Div>
           <ButtonWrapper type="primary" onClick={onReset}>다시!</ButtonWrapper>
-          <Link href="/record">
+            <Link href="/record">
             <a><ButtonWrapper type="primary">다른 사람 점수 보러가기</ButtonWrapper></a>
-          </Link>
+            </Link>
         </Div>
+          <UnderButton score={score} />
       </>
       :
        <>
