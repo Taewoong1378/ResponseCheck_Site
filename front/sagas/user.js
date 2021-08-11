@@ -1,4 +1,4 @@
-import { fork, put, takeLatest, call } from 'redux-saga/effects';
+import { fork, put, takeLatest, call, all } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
@@ -33,6 +33,8 @@ function* watchNicknameIn() {
 }
 
 export default function* userSaga() {
-    yield fork(watchNicknameIn);
+    yield all([
+      fork(watchNicknameIn),
+    ]);
 }
   

@@ -6,6 +6,7 @@ import Router from 'next/router';
 
 const Home = () => {
     const { nicknameDone } = useSelector((state) => state.user);
+    
     useEffect(() => {
         if (nicknameDone) {
             alert('다른 사람들의 점수를 확인하러 이동합니다!');

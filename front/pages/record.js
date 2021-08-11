@@ -30,20 +30,20 @@ const Record = () => {
       ] : null;
 
     return (
-        <AppLayout>
-            <div style={style}>
-                <H1>전체 순위</H1>
-                <Divider orientation="center">전체 10등까지!</Divider>
-                <List
-                style={{ textAlign: 'center' }}
-                size="small"
-                bordered
-                dataSource={data}
-                renderItem={item => <List.Item style={{ display: 'flex', justifyContent: 'center' }}>{item}</List.Item>}
-                />
-                <Button type="primary" style={{ display: 'block', margin: 'auto', marginTop: '20px' }}><Link href="/"><a>게임 다시 시작하기!</a></Link></Button>
-            </div>
-        </AppLayout>
+            <AppLayout>
+                <div style={style}>
+                    <H1>전체 순위</H1>
+                    <Divider orientation="center">전체 10등까지!</Divider>
+                    <List
+                    style={{ textAlign: 'center' }}
+                    size="small"
+                    bordered
+                    dataSource={data}
+                    renderItem={item => <List.Item style={{ display: 'flex', justifyContent: 'center' }}>{item}</List.Item>}
+                    />
+                    <Button type="primary" style={{ display: 'block', margin: 'auto', marginTop: '20px' }}><Link href="/"><a>게임 다시 시작하기!</a></Link></Button>
+                </div>
+            </AppLayout>
     );
 };
 
